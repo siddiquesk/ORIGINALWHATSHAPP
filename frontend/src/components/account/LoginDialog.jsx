@@ -4,7 +4,7 @@ import { Dialog, Box, Typography, List, ListItem, styled } from "@mui/material";
 import { qrCodeImage } from "../../imagesall/data";
 import { GoogleLogin } from "@react-oauth/google";
 import { AccountContext } from "../../context/AccountProvider";
-
+import { addUser } from "../../service/api";
 // ====== Styled Components ======
 
 // Main container holding left & right sections
@@ -80,10 +80,11 @@ const dialogStyle = {
 function LoginDialog() {
   const { setAccount } = useContext(AccountContext);
   // On successful login, decode user info
-  const onLoginSuccess = (res) => {
+  const onLoginSuccess = async (res) => {
     if (res.credential) {
       const Decodeduser = jwtDecode(res.credential);
       setAccount(Decodeduser);
+      await addUser(Decodeduser); // <- correctly pass the user here
       console.log("Decoded User Info:", Decodeduser);
     } else {
       console.log("No credential token received.");
