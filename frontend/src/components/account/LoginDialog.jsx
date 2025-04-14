@@ -85,7 +85,6 @@ function LoginDialog() {
       const Decodeduser = jwtDecode(res.credential);
       setAccount(Decodeduser);
       await addUser(Decodeduser); // <- correctly pass the user here
-      console.log("Decoded User Info:", Decodeduser);
     } else {
       console.log("No credential token received.");
     }

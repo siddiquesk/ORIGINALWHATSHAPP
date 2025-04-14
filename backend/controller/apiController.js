@@ -1,6 +1,6 @@
 
 import User from "../models/User.js";
-
+import Chat from "../models/conversation.js"
 
 
 export const addUser = async (req, res) => {
@@ -25,4 +25,21 @@ export const showUser=async(req,res)=>{
   }catch(err){
     return res.status(500).json(err.message);
   }
+}
+export const AllConversation=async(req,res)=>{
+try{
+   const senderId=req.body.senderId;
+   const reciverId=req.body.reciverId;
+   const exist=await Chat.findOne({members:{$all:[reciverId,senderId]}});
+   if(exist){
+    return res.status(200).json('conversation exists');
+   }
+   const newChat=new Chat({
+    members:[reciverId,senderId]
+   })
+   await newChat.save();
+   return res.status(200).json('coversation saved successfully');
+}catch(err){
+  return res.status(500).json(err.message);
+}
 }

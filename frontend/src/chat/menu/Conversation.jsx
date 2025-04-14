@@ -8,25 +8,27 @@ import { AccountContext } from "./../../context/AccountProvider";
 const Component = styled(Box)`
   height: 81vh;
   overflow: overlay;
-
 `;
 
 const StyleDivide = styled(Divider)`
   margin: 0 0 15px;
   background: rgb(243, 242, 242);
-  
 `;
-function Conversation() {
+
+function Conversation({ text }) {
   const [users, setUsers] = useState([]);
   const { account } = useContext(AccountContext);
   useEffect(() => {
     const fetchData = async () => {
       let response = await showUser();
-      setUsers(response);
+      const filterData = response.filter((user) =>
+        user.name.toLowerCase().includes(text.toLowerCase())
+      );
+      setUsers(filterData);
     };
 
     fetchData();
-  }, []);
+  }, [text]);
 
   return (
     <>

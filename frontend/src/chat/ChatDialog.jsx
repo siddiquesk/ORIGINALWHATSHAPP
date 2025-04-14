@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 // EmptyChat aur MenuBar ko import kiya gaya hai, jo dialog ke left aur right side components hain
 import EmptyChat from "./EmptyChat/EmptyChat";
 import MenuBar from "./menu/MenuBar";
 import { Dialog, Box, styled } from "@mui/material";
-
+import { AccountContext } from "../context/AccountProvider";
+import ChatBox from "./EmptyChat/ChatBox";
 // Dialog ki styling ke liye style object
 const dialogStyle = {
   height: "96%", // Dialog ki height ko 96% set kiya gaya
@@ -35,6 +36,8 @@ const RightComponent = styled(Box)`
 `;
 
 function ChatDialog() {
+  const { person } = useContext(AccountContext);
+  console.log("persons", person);
   return (
     <>
       {/* Dialog component, jo full-screen modal ke tarah open hota hai */}
@@ -52,7 +55,7 @@ function ChatDialog() {
 
           {/* Right side empty chat section */}
           <RightComponent>
-            <EmptyChat /> {/* EmptyChat component */}
+            {Object.keys(person).length ? <ChatBox /> : <EmptyChat />}
           </RightComponent>
         </Component>
       </Dialog>

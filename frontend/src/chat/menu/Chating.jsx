@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box, styled, Typography } from "@mui/material";
-
+import { AccountContext } from "../../context/AccountProvider";
+import { setConversation } from "../../service/api";
 const Component = styled(Box)`
   display: flex;
   height: 50px;
@@ -9,20 +10,23 @@ const Component = styled(Box)`
   cursor: pointer;
   margin: 13px 0px;
   border-radius: 8px; /* Smooth corners */
-  transition: background-color 0.3s ease; /* Smooth hover effect */
-  &:hover {
-    background-color: #f0f0f0; /* Light gray like WhatsApp */
-  }
 `;
 const Image = styled(`img`)({
   width: 50,
   height: 50,
   borderRadius: "50%",
 });
+
 function Chating({ user }) {
+  const { setPerson, account } = useContext(AccountContext);
+  const getUsersCall = async () => {
+    setPerson(user);
+    await setConversation({ senderId: account.sub, reciverId: user.sub });
+  };
+
   return (
     <>
-      <Component>
+      <Component onClick={getUsersCall}>
         <Box>
           <Image src={user.picture} alt="image" />
         </Box>

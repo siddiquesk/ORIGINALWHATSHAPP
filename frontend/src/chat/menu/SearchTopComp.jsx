@@ -34,12 +34,15 @@ const StyledInput = styled(InputBase)`
   }
 `;
 
-function SearchTopComp() {
+function SearchTopComp({ setText }) {
   return (
     <Container>
       <SearchBox>
         <SearchIcon style={{ color: "#919191", fontSize: "20px" }} />
-        <StyledInput placeholder="Search or start new chat" />
+        <StyledInput
+          placeholder="Search or start new chat"
+          onClick={(e) => setText(e.target.value)}
+        />
       </SearchBox>
     </Container>
   );
