@@ -43,3 +43,15 @@ try{
   return res.status(500).json(err.message);
 }
 }
+
+export const getConversation=async(req,res)=>{
+  try{
+    const senderId=req.body.senderId;
+    const reciverId=req.body.reciverId;
+     const chats =await Chat.findOne({members:{$all:[reciverId,senderId]}});
+     return res.status(200).json(chats);
+ }catch(err){
+   return res.status(500).json(err.message);
+ }
+}
+

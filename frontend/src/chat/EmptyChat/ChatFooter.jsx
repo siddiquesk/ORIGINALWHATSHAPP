@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, styled, InputBase } from "@mui/material";
 import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
 import AttachFileIcon from "@mui/icons-material/AttachFile";
@@ -6,11 +6,12 @@ import MicNoneIcon from "@mui/icons-material/MicNone";
 
 // Footer container
 const Container = styled(Box)`
-  height: 60px;
-  background: rgb(255, 255, 255);
+  height: 55px;
+  background: #f0f0f0;
   display: flex;
   align-items: center;
-  padding: 0 15px;
+  padding: 0 10px;
+  position: relative;
 `;
 
 // Wrapper around input field
@@ -19,7 +20,8 @@ const InputWrapper = styled(Box)`
   flex: 1;
   display: flex;
   align-items: center;
-  padding: 5px 10px;
+  border-radius: 20px;
+  padding: 5px 15px;
   margin: 0 10px;
 `;
 
@@ -30,7 +32,7 @@ const StyledInput = styled(InputBase)`
   padding-left: 10px;
 `;
 
-function ChatFooter() {
+function ChatFooter({ sendText, setText, text }) {
   return (
     <Container>
       <EmojiEmotionsOutlinedIcon
@@ -38,7 +40,6 @@ function ChatFooter() {
           color: "#54656f",
           fontSize: 24,
           cursor: "pointer",
-          marginRight: 6,
         }}
       />
       <AttachFileIcon
@@ -47,14 +48,17 @@ function ChatFooter() {
           fontSize: 24,
           cursor: "pointer",
           transform: "rotate(45deg)",
-          marginLeft: 8,
+          marginLeft: 10,
         }}
       />
-
       <InputWrapper>
-        <StyledInput placeholder="Type a message" />
+        <StyledInput
+          placeholder="Type a message"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          onKeyPress={(e) => sendText(e)}
+        />
       </InputWrapper>
-
       <MicNoneIcon
         style={{ color: "#54656f", fontSize: 24, cursor: "pointer" }}
       />
